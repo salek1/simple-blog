@@ -1,0 +1,18 @@
+{
+    "name": "izaak/blog",
+    "description": "Simple Blog",
+    "type": "project",
+    "authors": [
+        {
+            "name": "salek1",
+            "email": "izaaksalek@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "blog\\": "src/"
+        }
+    }
+}

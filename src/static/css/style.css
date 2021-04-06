@@ -1,0 +1,28 @@
+html, body{
+    height: 100%;
+}
+
+.container{
+    height: inherit;
+}
+
+.link{
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-body{
+    overflow: hidden;
+}
+
+.card-text{
+    max-height: 6ch;
+}
+
+.container footer{
+    height: 9%;
+}
+
+.container footer p{
+    font-size: 1.1rem;
+}
