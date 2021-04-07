@@ -6,6 +6,15 @@ html, body{
     height: inherit;
 }
 
+main{
+    min-height: 70%;
+}
+
+.logo{
+    height: 100px;
+    margin-right: 20px;
+}
+
 .link{
     text-decoration: none;
     color: inherit;

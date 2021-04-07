@@ -42,12 +42,14 @@ class Post
         return null;
     }
 
-    public function findPostByTitle(string $title) :Post{
-        if ($title != null && strlen($this->title) > 0){
-            if ($post = $this->postDAO->findPostByTitle($title)){
+    public function findPostByTitle(string $title) :?array{
+        if ($title != null && strlen($title) > 0){
+            $post = $this->postDAO->findPostByTitle($title);
+            if ($post != null){
                 return $post;
             }
         }
+        return null;
     }
 
     public function findAllPosts() :?array{

@@ -3,6 +3,7 @@
 namespace blog\controller;
 
 use blog\model\Post;
+use DateTime;
 
 class PostController
 {
@@ -13,10 +14,19 @@ class PostController
         $this->post = new Post();
     }
 
-    public function listaPosts()
+    public function listaPosts() :?array
     {
         $posts = $this->post->findAllPosts();
-        return array_reverse($this->setObjectToPost($posts));
+        return $this->setObjectToPost($posts);
+    }
+
+    public function findPostByTitle(string $title) :?array
+    {
+        if ($title == null){
+            return null;
+        }
+        $posts = $this->post->findPostByTitle($title);
+        return $this->setObjectToPost($posts);
     }
 
     private function setObjectToPost($posts) : array
@@ -27,10 +37,12 @@ class PostController
             $p->setId($post->id);
             $p->setTitle($post->title);
             $p->setContent($post->content);
-            $p->setCreationDate($post->creationDate);
-            $p->setUpdateDate($post->updateDate);
-            $p->setSlug($post->slug);
-            $p->setUser($post->userId);
+            $p->setCreationDate(
+                DateTime::createFromFormat(
+                    'Y-m-d H:i:s',
+                    $post->creationDate)->format('d/m/Y H:i:s')
+            );
+            $p->setUser($post->user);
             array_push($arr, $p);
         }
         return $arr;

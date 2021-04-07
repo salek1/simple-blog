@@ -16,14 +16,17 @@ class PostDAO
         $this->connection = DatabasePDO::getConnection();
     }
 
-    public function findPostByTitle($title) : ?Post
+    public function findPostByTitle($title) :?array
     {
         try{
-            $query = 'SELECT * FROM Posts WHERE title = :title';
+            $query = 'SELECT p.id, p.title, p.content, p.creationDate, u.nickname as user '.
+                    'FROM Posts as p JOIN User as u '.
+                    'ON p.userId = u.id '.
+                    'WHERE title LIKE :title '.
+                    'ORDER BY p.creationDate DESC';
             $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':title', $title, PDO::PARAM_INT);
-            if ($stmt->execute()){
-                return $stmt->fetch(PDO::FETCH_CLASS, '\blog\model\Post');
+            if ($stmt->execute([':title' => '%'.$title.'%'])){
+                return $stmt->fetchAll(PDO::FETCH_CLASS);
             }
             return null;
         }catch (PDOException $e){
@@ -33,7 +36,10 @@ class PostDAO
 
     public function findAllPosts() : ?array{
         try {
-            $query = 'SELECT * FROM Posts';
+            $query = 'SELECT p.id, p.title, p.content, p.creationDate, u.nickname as user '.
+            'FROM Posts as p JOIN User as u '.
+            'ON p.userId = u.id '.
+            'ORDER BY p.creationDate DESC';
             $stmt = $this->connection->prepare($query);
             if ($stmt->execute()){
                 return $stmt->fetchAll(PDO::FETCH_CLASS);
