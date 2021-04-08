@@ -1,6 +1,6 @@
 <?php
-    require_once '../../vendor/autoload.php';
-    include_once 'head.php';
+    require '../../../vendor/autoload.php';
+    include_once '../users/head.php';
 
     use \blog\controller\PostController;
 
@@ -10,13 +10,18 @@
 
 ?>
 
-<?php if ($postByTitle != null): ?>
+<?php if ($postByTitle[0] == "erro"): ?>
+    <section>
+        <h3 class="alert-info">Não foi possível encontrar o post na base de dados! :(</h3>
+    </section>  
+<?php elseif(!empty($postByTitle)): ?>
 
-<section>
+   <section>
     <?php foreach ($postByTitle as $post): ?>
     <div class="card m-3 shadow pb-3">
         <div class="card-body ">
-            <a href="#" class="stretched-link text-decoration-none text-body">
+            <a href="postContent.php?id=<?= $post->getId(); ?>"
+               class="stretched-link text-decoration-none text-body">
                 <h3 class="card-title"><?= $post->getTitle(); ?></h3>
             </a>
             <p>Autor: <?= $post->getUser() ?></p>
@@ -35,10 +40,9 @@
     <?php endforeach; ?>
 </section>
 
-<?php
-    else:
-        header('location: posts.php');
+<?php else:
+        $postController->postView();
     endif;
 ?>
 
-<?php include_once 'bottom.php'; ?>
+<?php include_once '../users/bottom.php'; ?>

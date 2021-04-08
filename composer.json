@@ -9,7 +9,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+      "ext-pdo": "*",
+      "ext-http": "*"
+    },
     "autoload": {
         "psr-4": {
             "blog\\": "src/"

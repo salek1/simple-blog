@@ -1,8 +1,6 @@
 <?php
 
 namespace blog\model;
-
-
 use blog\model\dao\PostDAO;
 use Cassandra\Date;
 
@@ -19,30 +17,13 @@ class Post
 
     private PostDAO $postDAO;
 
-    public function __construct($title = '', $content = '')
+    public function __construct()
     {
-        $this->title = $title;
-        $this->content = $content;
-        //$this->user = new User();
         $this->postDAO = new PostDAO();
     }
 
-    private function setPost($post) :?Post
-    {
-        if ($post != null){
-            $this->setId($post->id);
-            $this->setTitle($post->title);
-            $this->setContent($post->content);
-            $this->setCreationDate($post->creationDate);
-            $this->setUpdateDate($post->updateDate);
-            $this->setSlug($post->slug);
-            $this->setUser($post->userId);
-            return $this;
-        }
-        return null;
-    }
-
     public function findPostByTitle(string $title) :?array{
+
         if ($title != null && strlen($title) > 0){
             $post = $this->postDAO->findPostByTitle($title);
             if ($post != null){
@@ -54,6 +35,14 @@ class Post
 
     public function findAllPosts() :?array{
        return $this->postDAO->findAllPosts();
+    }
+
+    public function findPostById($id) :?Post{
+        $post = $this->postDAO->findPostById($id);
+        if ($post){
+            return $post;
+        }
+        return null;
     }
 
     /**
@@ -74,7 +63,7 @@ class Post
      */
     public function getTitle()
     {
-        return $this->title;
+        return ucfirst($this->title);
     }
 
     /**
@@ -90,7 +79,7 @@ class Post
      */
     public function getContent()
     {
-        return $this->content;
+        return ucfirst($this->content);
     }
 
     /**
@@ -154,7 +143,7 @@ class Post
      */
     public function getUser()
     {
-        return $this->user;
+        return ucfirst($this->user);
     }
 
     /**
@@ -167,7 +156,7 @@ class Post
 
     public function __toString(): string
     {
-        return $this->title;
+        return $this->getTitle();
     }
 
 

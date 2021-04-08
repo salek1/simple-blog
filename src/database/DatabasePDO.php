@@ -11,35 +11,28 @@ class DatabasePDO
     private const DATABASE_NAME = 'blog';
     private const DB_USER = 'root';
     private const DB_PASSWORD = '';
-
-    public function __construct()
+    
+    private static $instance;
+    
+    public static function getInstance() : PDO
     {
-        $this->setConnection();
-    }
-
-    public static function getConnection() : PDO
-    {
-        return self::setConnection();
-    }
-
-    private static function setConnection() : PDO
-    {
-        try {
-            $connection = new PDO(
-                'mysql:host=' . self::HOST . ';
-                    dbname=' . self::DATABASE_NAME,
-                self::DB_USER, self::DB_PASSWORD
-            );
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $pdoException) {
-            throw new PDOException('Erro na conexão ao banco' . $pdoException->errorInfo);
+        if (empty(self::$instance)) {
+            try {
+                self::$instance = new PDO(
+                    'mysql:host='. self::HOST.';dbname='. self::DATABASE_NAME,
+                    self::DB_USER, self::DB_PASSWORD
+                );
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            } catch (PDOException $pdoException) {
+                throw new PDOException('Erro na conexão ao banco' . $pdoException->errorInfo);
+            }
         }
-        return $connection;
+        return self::$instance;
     }
-
-
-    public function closeConnection(&$conn) : void
+    
+    private function __construct()
     {
-        $conn = null;
+        
     }
 }

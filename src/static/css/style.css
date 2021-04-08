@@ -24,6 +24,16 @@ main{
     overflow: hidden;
 }
 
+.card{
+    height: 235px;
+}
+
+.card:hover{
+    
+    width: 1090px;
+    padding: 2px;
+}
+
 .card-text{
     max-height: 6ch;
 }
@@ -34,4 +44,29 @@ main{
 
 .container footer p{
     font-size: 1.1rem;
+}
+
+.container footer a:hover{
+    font-size: 1.15rem;
+}
+
+#content-top{
+    flex-wrap: wrap;
+}
+
+#content-top h1{
+    width: 100%;
+}
+
+#content-top div p{
+    margin-right: 30px;
+    margin-top: 10px;
+    font-size: 1.02rem;
+}
+
+section article p{
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    padding: 0 20px;
+    font-size: 1.4rem;
 }
